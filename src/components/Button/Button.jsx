@@ -1,5 +1,5 @@
 import React from 'react';
-import StyledButtonLoadMore from 'components/Button/Button.styled';
+import { StyledButtonLoadMore } from 'components/Button/Button.styled';
 
 const LoadButton = ({ handlerClickButton }) => {
   return (
