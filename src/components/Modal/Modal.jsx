@@ -9,6 +9,11 @@ import {
 const modalRoot = document.querySelector('#modal-root');
 
 class Modal extends Component {
+  // state = {
+  //   largeImageURL: '',
+  //   tags: '',
+  // };
+
   componentDidMount() {
     window.addEventListener('keydown', this.hendleKeyDown);
   }
@@ -16,6 +21,14 @@ class Modal extends Component {
   componentWillUnmount() {
     window.removeEventListener('keydown', this.hendleKeyDown);
   }
+
+  // componentDidUpdate(prevProps, _) {
+  //   const prevPicture = prevProps.largeImageURL;
+  //   const nextPicture = this.props.picture.largeImageURL;
+  //   if (prevPicture !== nextPicture) {
+  //     this.setState({ largeImageURL: nextPicture });
+  //   }
+  // }
 
   hendleKeyDown = event => {
     if (event.code === 'Escape') {
@@ -30,10 +43,12 @@ class Modal extends Component {
   };
 
   render() {
+    const { largeImageURL, tags } = this.props.picture;
+    // console.log('this.props.picture', this.props.picture);
     return createPortal(
       <StyledModalBackground onClick={this.hendleBackdropClick}>
         <StyledModalCard>
-          <StyledModalCardImg src="" alt="" />
+          <StyledModalCardImg src={largeImageURL} alt={tags} />
         </StyledModalCard>
       </StyledModalBackground>,
       modalRoot

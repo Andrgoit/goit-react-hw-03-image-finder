@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { FcSearch } from 'react-icons/fc';
 import {
   StyledSearchInput,
@@ -26,10 +26,10 @@ class SearchBar extends Component {
   handlerSubmit = event => {
     event.preventDefault();
     if (this.state.value.trim() === '') {
-      return; //toast.error('wow');
+      return toast.error('Некорректный запрос');
     }
     this.props.onChangeValue(this.state.value);
-    this.resetForm();
+    this.setState({ value: '' });
   };
 
   render() {

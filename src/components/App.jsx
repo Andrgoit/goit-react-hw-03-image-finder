@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
-// import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import SearchBar from './SearchBar/SearchBar';
 import { ImageGallery } from 'components/ImageGallery/ImageGallery';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
@@ -12,18 +13,12 @@ import { apiRequest } from '../services/api';
 class App extends Component {
   state = {
     pictures: [],
-    activeIndex: null,
+    picture: null,
     page: 1,
     showModal: false,
     name: null,
     loading: false,
   };
-
-  // componentDidMount() {
-  //   fetch(
-  //     'https://pixabay.com/api/?q=cat&page=1&key=28166430-49d596e3415ce5cac11c6cb0f&image_type=photo&orientation=horizontal&per_page=12'
-  //   );
-  // }
 
   componentDidUpdate(_, prevState) {
     const prevName = prevState.name;
@@ -49,7 +44,11 @@ class App extends Component {
   };
 
   formSubmithandler = value => {
-    this.setState({ name: value });
+    this.setState({
+      name: value,
+      page: 1,
+      pictures: [],
+    });
   };
 
   loadMoreButtonHandler = () => {
@@ -59,17 +58,27 @@ class App extends Component {
     });
   };
 
+  choiceImageForModalWindow = newPicture => {
+    // console.log('newPicture', newPicture);
+    this.setState({ picture: newPicture, showModal: true });
+  };
+
   render() {
     const { loading, pictures, showModal } = this.state;
 
     return (
       <div>
-        {/* <ToastContainer /> */}
-        {showModal && <Modal onClose={this.closeModal} />}
+        <ToastContainer autoClose={1000} />
+        {showModal && (
+          <Modal picture={this.state.picture} onClose={this.closeModal} />
+        )}
         <SearchBar onChangeValue={this.formSubmithandler} />
 
         {pictures && (
-          <ImageGallery pictures={this.state.pictures}>
+          <ImageGallery
+            pictures={this.state.pictures}
+            onClick={this.choiceImageForModalWindow}
+          >
             <ImageGalleryItem />
           </ImageGallery>
         )}
@@ -87,7 +96,7 @@ class App extends Component {
             />
           ) : (
             pictures.length > 0 && (
-              <LoadButton handlerClickButton={this.loadMoreButtonHandler} />
+              <LoadButton onClick={this.loadMoreButtonHandler} />
             )
           )}
         </Container>

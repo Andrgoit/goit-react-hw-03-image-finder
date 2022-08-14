@@ -16,8 +16,8 @@ const StyledModalCard = styled.div`
   transform: translate(-50%, -50%);
   width: 50%;
   min-height: 300px;
-  background-color: #fff;
-  border: 1px solid red;
+  /* background-color: #fff; */
+  /* border: 1px solid red; */
   padding: 30px;
 `;
 
